@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>개웅중학교 2026 디벗 양품화 안내</title>
+<style>
+  :root{
+    --navy:#12325b; --navy-2:#1d4f86; --ink:#1b2430; --muted:#5b6878;
+    --line:#dbe3ec; --bg:#eef2f6; --card:#fff; --soft:#f4f7fb; --red:#b3261e;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.5;word-break:keep-all;overflow-wrap:break-word}
+  button,a{font:inherit}
+  button{cursor:pointer;color:inherit}
+  .wrap{max-width:640px;margin:0 auto;min-height:100vh;background:var(--card);
+    padding:0 16px calc(28px + env(safe-area-inset-bottom))}
+
+  /* 머리말 */
+  .head{padding:22px 2px 14px}
+  .school{margin:0;font-size:14px;font-weight:700;color:var(--muted)}
+  .title{margin:2px 0 0;font-size:26px;line-height:1.25;color:var(--navy);letter-spacing:-.02em}
+
+  /* 일정 */
+  .dates{margin:4px 0 18px;border:1px solid var(--line);border-radius:14px;background:var(--soft);overflow:hidden}
+  .dates dl{margin:0}
+  .row{display:grid;grid-template-columns:92px 1fr;gap:10px;padding:11px 14px;border-top:1px solid var(--line)}
+  .row:first-child{border-top:0}
+  .row dt{font-size:14px;font-weight:700;color:var(--muted)}
+  .row dd{margin:0;font-size:16px;font-weight:800;color:var(--ink)}
+  .row dd small{display:block;font-size:13px;font-weight:500;color:var(--muted)}
+  .notice{margin:0;padding:12px 14px 12px 34px;border-top:1px solid var(--line);background:#fff;
+    font-size:15px;font-weight:700;color:var(--ink);line-height:1.5}
+  .notice li{margin:0 0 6px}
+  .notice li:last-child{margin-bottom:0}
+  .notice li::marker{color:var(--red);font-weight:800}
+
+  /* 쪽 넘기기 */
+  .pnav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0}
+  .pbtn{flex:0 0 76px;height:52px;border:0;border-radius:12px;background:var(--navy);color:#fff;font-size:30px;font-weight:800;line-height:1}
+  .pbtn:disabled{opacity:.3;cursor:default}
+  .pnum{font-size:17px;font-weight:800;color:var(--navy)}
+  .pview .shot{width:100%}
+
+  /* 메인 버튼 */
+  .menu{display:grid;gap:10px}
+  .big{display:flex;align-items:center;gap:14px;width:100%;padding:18px 16px;border:0;border-radius:16px;
+    background:var(--navy);color:#fff;text-align:left;box-shadow:0 3px 10px rgba(18,50,91,.18)}
+  .big .n{flex:0 0 40px;height:40px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(255,255,255,.18);font-size:19px;font-weight:800}
+  .big .t{display:block;font-size:19px;font-weight:800;line-height:1.3}
+  .big .s{display:block;margin-top:3px;font-size:14px;font-weight:500;opacity:.85}
+  .big .arr{margin-left:auto;font-size:22px;opacity:.7}
+  .small-menu{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .mid{display:flex;align-items:center;gap:10px;padding:14px 12px;border:1px solid var(--line);border-radius:14px;background:#fff;text-align:left}
+  .mid .n{flex:0 0 30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#e7eef7;color:var(--navy);font-weight:800}
+  .mid .t{font-size:16px;font-weight:800;color:var(--navy);line-height:1.3}
+
+  /* 화면 전환 */
+  .screen{display:none}
+  .screen.on{display:block}
+  .bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;margin:0 -16px 6px;padding:10px 16px;
+    background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(6px)}
+  .back{flex:0 0 auto;padding:9px 13px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);font-size:15px;font-weight:700}
+  .bar h2{margin:0;font-size:19px;line-height:1.3;color:var(--navy)}
+  .bar h2:focus{outline:none}
+  .guide{margin:12px 2px 14px;font-size:15px;color:var(--muted)}
+  .group{margin:22px 2px 8px;font-size:14px;font-weight:800;color:var(--muted)}
+
+  /* 펼치기 항목 */
+  .item{margin:0 0 10px;border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden}
+  .item.open{border-color:#b9cbe0;box-shadow:0 2px 10px rgba(18,50,91,.08)}
+  .toggle{display:flex;align-items:center;gap:12px;width:100%;padding:15px 14px;border:0;background:#fff;text-align:left}
+  .toggle .n{flex:0 0 32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#e7eef7;color:var(--navy);font-weight:800}
+  .toggle .t{display:block;font-size:17px;font-weight:800;color:var(--ink);line-height:1.35}
+  .toggle .s{display:block;margin-top:2px;font-size:14px;color:var(--muted)}
+  .toggle .chev{margin-left:auto;flex:0 0 auto;font-size:14px;font-weight:700;color:var(--navy-2)}
+  .item.open .toggle{background:var(--soft)}
+  .panel{display:none;padding:12px 12px 14px;border-top:1px solid var(--line)}
+  .item.open .panel{display:block}
+  .shot{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#f6f8fa;cursor:zoom-in}
+  .loading{padding:40px 10px;text-align:center;font-size:15px;color:var(--muted);background:#f6f8fa;border-radius:8px}
+  .tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:10px 14px;border-radius:11px;
+    border:1px solid var(--navy);background:var(--navy);color:#fff;font-size:15px;font-weight:700;text-decoration:none}
+  .btn.line{background:#fff;color:var(--navy);border-color:#b9cbe0}
+  .note{margin:8px 0 0;font-size:13px;color:var(--muted)}
+
+  /* PDF 원본 */
+  .pdf{margin:22px 0 4px;padding:14px;border-radius:14px;background:var(--soft);border:1px solid var(--line)}
+  .pdf p{margin:0 0 10px;font-size:15px;font-weight:700;color:var(--navy)}
+  .status{min-height:1.4em;margin-top:8px;font-size:14px;color:var(--muted)}
+  .status.err{color:var(--red)}
+
+  /* 크게 보기 */
+  #viewer{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;background:#0d1724}
+  #viewer.on{display:flex}
+  .vbar{display:flex;align-items:center;gap:8px;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top));background:#0d1724;color:#fff}
+  .vbar .z{min-width:52px;padding:8px 10px;border:1px solid #4a5d75;border-radius:9px;background:#18263a;color:#fff;font-weight:700}
+  .vbar .z.on{background:#fff;color:var(--navy)}
+  .vbar .close{margin-left:auto;padding:8px 14px;border:0;border-radius:9px;background:#fff;color:var(--navy);font-weight:800}
+  .vbody{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;background:#fff}
+  .vbody img{display:block;width:100%;height:auto}
+
+  @media (min-width:600px){
+    .wrap{padding-left:28px;padding-right:28px}
+    .bar{margin:0 -28px 6px;padding:12px 28px}
+    .title{font-size:30px}
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <!-- 처음 화면 -->
+  <section id="home" class="screen on" aria-labelledby="t-home">
+    <header class="head">
+      <p class="school">개웅중학교</p>
+      <h1 class="title" id="t-home" tabindex="-1">2026 디벗 양품화 안내</h1>
+    </header>
+
+    <div class="dates">
+      <dl>
+        <div class="row"><dt>자가점검 기간</dt><dd>11. 5.(목) ~ 11. 6.(금)<small>디벗 반납 점검표 작성</small></dd></div>
+        <div class="row"><dt>반납 기간</dt><dd>11. 9.(월) ~ 11. 12.(목)</dd></div>
+        <div class="row"><dt>반납 장소</dt><dd>각 학급의 디벗 충전보관함</dd></div>
+      </dl>
+      <ol class="notice">
+        <li>모든 디벗 반납이 완료되면 '과학정보부 - 박조훈 선생님'에게 말해주세요.</li>
+        <li>충전함을 3-4 옆 빈교실(학생회실)로 이동해야해요.</li>
+      </ol>
+    </div>
+
+    <nav class="menu" aria-label="안내 항목">
+      <button class="big" type="button" data-go="as">
+        <span class="n">1</span>
+        <span><span class="t">AS 방법</span><span class="s">고장·파손·분실했을 때</span></span>
+        <span class="arr" aria-hidden="true">›</span>
+      </button>
+      <button class="big" type="button" data-go="unlock">
+        <span class="n">2</span>
+        <span><span class="t">기기 잠금 해제<br>&amp; ASM 로그아웃</span><span class="s">반납 전에 꼭 하기</span></span>
+        <span class="arr" aria-hidden="true">›</span>
+      </button>
+    </nav>
+    <div class="small-menu">
+      <button class="mid" type="button" data-go="return"><span class="n">3</span><span class="t">「디벗」<br>반납 안내</span></button>
+      <button class="mid" type="button" data-go="check"><span class="n">4</span><span class="t">반납<br>점검표</span></button>
+    </div>
+  </section>
+
+  <!-- 1. AS 방법 -->
+  <section id="as" class="screen" aria-labelledby="t-as">
+    <div class="bar"><button class="back" type="button">← 처음으로</button><h2 id="t-as" tabindex="-1">1. AS 방법</h2></div>
+    <p class="guide">AS가 필요한 경우, 아래 방법 중 한 가지를 선택해서 최대한 빨리 수리 접수를 해주세요.</p>
+
+    <div class="item" data-img="as_call">
+      <button class="toggle" type="button"><span class="n">1</span><span><span class="t">디벗 통합 콜센터</span><span class="s">☎ 1566-6647</span></span><span class="chev">열기 ▾</span></button>
+      <div class="panel"><div class="tools"><a class="btn" href="tel:15666647">☎ 1566-6647 전화 걸기</a></div></div>
+    </div>
+    <div class="item" data-img="as_kakao">
+      <button class="toggle" type="button"><span class="n">2</span><span><span class="t">디벗 카카오톡 채널</span><span class="s">채팅 · 챗봇으로 문의</span></span><span class="chev">열기 ▾</span></button>
+      <div class="panel"><div class="tools"><a class="btn" href="https://pf.kakao.com/_xgKxlMxj" target="_blank" rel="noopener">카카오톡 채널 바로가기</a></div></div>
+    </div>
+    <div class="item" data-img="as_locker">
+      <button class="toggle" type="button"><span class="n">3</span><span><span class="t">교내 무인 보관함</span><span class="s">3층 과학실1 내부</span></span><span class="chev">열기 ▾</span></button>
+      <div class="panel"></div>
+    </div>
+    <div class="item" data-img="as_center">
+      <button class="toggle" type="button"><span class="n">4</span><span><span class="t">지역 서비스센터 (A/S 접수)</span><span class="s">LG헬로비전 컨소시엄(케이원) · LG유플러스 지점</span></span><span class="chev">열기 ▾</span></button>
+      <div class="panel"><div class="tools"><a class="btn" href="https://pf.kakao.com/_xgKxlMxj/109820625" target="_blank" rel="noopener">지역 서비스센터 목록 보기</a></div></div>
+    </div>
+
+    <p class="group">가정통신문 내용</p>
+    <div class="item" data-img="ret_2">
+      <button class="toggle" type="button"><span class="n">5</span><span><span class="t">「디벗」 수리 방법</span><span class="s">주요 파손 사례 포함</span></span><span class="chev">열기 ▾</span></button>
+      <div class="panel"></div>
+    </div>
+    <div class="item" data-img="ret_3">
+      <button class="toggle" type="button"><span class="n">6</span><span><span class="t">「디벗」 구입 방법</span><span class="s">분실했을 때</span></span><span class="chev">열기 ▾</span></button>
+      <div class="panel"></div>
+    </div>
+    <div class="item" data-img="ret_4">
+      <button class="toggle" type="button"><span class="n">7</span><span><span class="t">주요 수리·구입 비용</span><span class="s">2024학년도 도입 디벗</span></span><span class="chev">열기 ▾</span></button>
+      <div class="panel"><div class="tools"><a class="btn" href="https://pf.kakao.com/_xgKxlMxj/107946119" target="_blank" rel="noopener">비용 안내 바로가기</a></div></div>
+    </div>
+
+    <div class="pdf">
+      <p>원본 PDF</p>
+      <div class="tools">
+        <button class="btn" type="button" data-doc="repair" data-mode="open">AS 방법 PDF 열기</button>
+        <button class="btn line" type="button" data-doc="repair" data-mode="save">저장</button>
+      </div>
+      <div class="status" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- 2. 잠금 해제 & ASM 로그아웃 -->
+  <section id="unlock" class="screen" aria-labelledby="t-unlock">
+    <div class="bar"><button class="back" type="button">← 처음으로</button><h2 id="t-unlock" tabindex="-1">2. 기기 잠금 해제 &amp; ASM 로그아웃</h2></div>
+    <p class="guide">반납 전에 두 가지를 모두 하세요. 누르면 원본 안내 그림이 나옵니다.</p>
+
+    <div class="item" data-img="unlock_lock">
+      <button class="toggle" type="button"><span class="n">1</span><span><span class="t">아이패드 기기 잠금 설정 안함 방법</span><span class="s">설정 → Touch ID 및 암호 → 암호 끄기</span></span><span class="chev">열기 ▾</span></button>
+      <div class="panel"></div>
+    </div>
+    <div class="item" data-img="unlock_asm">
+      <button class="toggle" type="button"><span class="n">2</span><span><span class="t">ASM 계정 로그아웃 방법</span><span class="s">설정 → 맨 위 계정 → 로그아웃</span></span><span class="chev">열기 ▾</span></button>
+      <div class="panel"></div>
+    </div>
+
+    <div class="pdf">
+      <p>원본 PDF</p>
+      <div class="tools">
+        <button class="btn" type="button" data-doc="unlock" data-mode="open">안내 PDF 열기</button>
+        <button class="btn line" type="button" data-doc="unlock" data-mode="save">저장</button>
+      </div>
+      <div class="status" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- 3. 「디벗」 반납 안내 (가정통신문 3쪽) -->
+  <section id="return" class="screen" aria-labelledby="t-return">
+    <div class="bar"><button class="back" type="button">← 처음으로</button><h2 id="t-return" tabindex="-1">3. 「디벗」 반납 안내</h2></div>
+    <p class="guide">가정통신문 전체 3쪽입니다. ‹ › 버튼을 눌러 넘겨 보세요.</p>
+
+    <div class="pager" data-pages="ret_p1,ret_p2,ret_p3">
+      <div class="pnav">
+        <button class="pbtn prev" type="button" aria-label="이전 쪽">‹</button>
+        <span class="pnum" aria-live="polite"></span>
+        <button class="pbtn next" type="button" aria-label="다음 쪽">›</button>
+      </div>
+      <div class="pview"></div>
+      <div class="pnav">
+        <button class="pbtn prev" type="button" aria-label="이전 쪽">‹</button>
+        <span class="pnum" aria-live="polite"></span>
+        <button class="pbtn next" type="button" aria-label="다음 쪽">›</button>
+      </div>
+      <div class="tools"><button class="btn line zoom" type="button">🔍 크게 보기</button></div>
+    </div>
+
+    <div class="pdf">
+      <p>원본 PDF</p>
+      <div class="tools">
+        <button class="btn" type="button" data-doc="return" data-mode="open">가정통신문 PDF 열기</button>
+      </div>
+      <div class="status" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- 4. 점검표 -->
+  <section id="check" class="screen" aria-labelledby="t-check">
+    <div class="bar"><button class="back" type="button">← 처음으로</button><h2 id="t-check" tabindex="-1">4. 반납 점검표</h2></div>
+    <p class="guide">자가점검 기간: 11. 5.(목) ~ 11. 6.(금)</p>
+
+    <div class="item open" data-img="check">
+      <button class="toggle" type="button"><span class="n">1</span><span><span class="t">디벗 반납 점검표(IOS)</span></span><span class="chev">닫기 ▴</span></button>
+      <div class="panel"></div>
+    </div>
+
+    <div class="pdf">
+      <p>원본 PDF (인쇄용)</p>
+      <div class="tools">
+        <button class="btn" type="button" data-doc="checklist" data-mode="open">점검표 PDF 열기</button>
+      </div>
+      <div class="status" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+
+<!-- 크게 보기 -->
+<div id="viewer" role="dialog" aria-modal="true" aria-label="원본 크게 보기">
+  <div class="vbar">
+    <button class="z on" type="button" data-z="100">맞춤</button>
+    <button class="z" type="button" data-z="200">2배</button>
+    <button class="z" type="button" data-z="300">3배</button>
+    <button class="close" type="button">닫기 ✕</button>
+  </div>
+  <div class="vbody"><img alt=""></div>
+</div>
+
+<script>
+(function () {
+  var DOCS = {"repair": "AS방법.pdf", "unlock": "(학급게시)기기잠금해제 및 ASM 로그아웃 방법.pdf", "return": "디벗 반납 안내26.pdf", "checklist": "디벗 반납 점검표26.pdf"};
+  function b64(blob) {
+    return new Promise(function (ok, fail) {
+      var r = new FileReader();
+      r.onload = function () { ok(String(r.result).split(',')[1]); };
+      r.onerror = fail; r.readAsDataURL(blob);
+    });
+  }
+  function load(url) {
+    return fetch(url).then(function (r) { if (!r.ok) throw new Error(r.status); return r.blob(); }).then(b64);
+  }
+  function R() {
+    var s, f, self = this;
+    this.withSuccessHandler = function (x) { s = x; return self; };
+    this.withFailureHandler = function (x) { f = x; return self; };
+    this.getImage = function (k) { load('img/' + k + '.jpg').then(function (d) { s && s(d); }, function (e) { f && f(e); }); };
+    this.getDocument = function (k) {
+      var d = DOCS[k];
+      if (!d) { f && f(new Error('Unknown document')); return; }
+      load('pdf/' + k + '.pdf').then(function (x) { s && s({filename: d, base64: x}); }, function (e) { f && f(e); });
+    };
+  }
+  var onChange = null;
+  window.addEventListener('popstate', function (e) { if (onChange) onChange({state: e.state}); });
+  window.google = {script: {
+    get run() { return new R(); },
+    history: {
+      push: function (st, p, h) { history.pushState(st, '', '#' + (h || '')); },
+      replace: function (st, p, h) { history.replaceState(st, '', '#' + (h || '')); },
+      setChangeHandler: function (fn) { onChange = fn; }
+    }
+  }};
+})();
+</script>
+<script>
+(function () {
+  var run = function () { return google.script.run; };
+  var hist = (window.google && google.script && google.script.history) || null;
+
+  /* ---------- 화면 전환 ---------- */
+  var screens = Array.prototype.slice.call(document.querySelectorAll('.screen'));
+  function show(id, push) {
+    screens.forEach(function (s) { s.classList.toggle('on', s.id === id); });
+    window.scrollTo(0, 0);
+    var h = document.querySelector('#' + id + ' [tabindex="-1"]');
+    if (h) h.focus({preventScroll: true});
+    if (push && hist) hist.push({s: id}, null, id);
+    if (id === 'check') openItem(document.querySelector('#check .item'));
+    if (id === 'return') pager.load();
+  }
+  document.querySelectorAll('[data-go]').forEach(function (b) {
+    b.addEventListener('click', function () { show(b.getAttribute('data-go'), true); });
+  });
+  document.querySelectorAll('.back').forEach(function (b) {
+    b.addEventListener('click', function () { show('home', true); });
+  });
+  if (hist) hist.setChangeHandler(function (e) { show((e.state && e.state.s) || 'home', false); });
+
+  /* ---------- 이미지 불러오기 ---------- */
+  var cache = {};
+  function getImg(key) {
+    if (!cache[key]) {
+      cache[key] = new Promise(function (ok, fail) {
+        run().withSuccessHandler(function (b64) { b64 ? ok('data:image/jpeg;base64,' + b64) : fail(); })
+             .withFailureHandler(fail).getImage(key);
+      });
+      cache[key].catch(function () { delete cache[key]; });
+    }
+    return cache[key];
+  }
+
+  function fill(item) {
+    var panel = item.querySelector('.panel');
+    if (panel.querySelector('.shot, .loading')) return;
+    var key = item.getAttribute('data-img');
+    var title = item.querySelector('.toggle .t').textContent;
+    var box = document.createElement('div');
+    box.className = 'loading';
+    box.textContent = '원본을 불러오는 중…';
+    panel.insertBefore(box, panel.firstChild);
+    getImg(key).then(function (src) {
+      var img = new Image();
+      img.className = 'shot';
+      img.alt = title + ' (원본 안내문)';
+      img.src = src;
+      img.addEventListener('click', function () { openViewer(src, img.alt); });
+      panel.replaceChild(img, box);
+      if (!panel.querySelector('.zoom')) {
+        var tools = panel.querySelector('.tools');
+        if (!tools) { tools = document.createElement('div'); tools.className = 'tools'; panel.appendChild(tools); }
+        var z = document.createElement('button');
+        z.type = 'button'; z.className = 'btn line zoom'; z.textContent = '🔍 크게 보기';
+        z.addEventListener('click', function () { openViewer(src, img.alt); });
+        tools.insertBefore(z, tools.firstChild);
+      }
+    }, function () {
+      box.innerHTML = '';
+      box.appendChild(document.createTextNode('불러오지 못했습니다. '));
+      var r = document.createElement('button');
+      r.type = 'button'; r.className = 'btn line'; r.textContent = '다시 시도';
+      r.addEventListener('click', function () { box.remove(); fill(item); });
+      box.appendChild(r);
+    });
+  }
+
+  function openItem(item) {
+    item.classList.add('open');
+    item.querySelector('.toggle').setAttribute('aria-expanded', 'true');
+    item.querySelector('.chev').textContent = '닫기 ▴';
+    fill(item);
+  }
+  function closeItem(item) {
+    item.classList.remove('open');
+    item.querySelector('.toggle').setAttribute('aria-expanded', 'false');
+    item.querySelector('.chev').textContent = '열기 ▾';
+  }
+  document.querySelectorAll('.item').forEach(function (item) {
+    var t = item.querySelector('.toggle');
+    t.setAttribute('aria-expanded', item.classList.contains('open') ? 'true' : 'false');
+    t.addEventListener('click', function () {
+      if (item.classList.contains('open')) { closeItem(item); return; }
+      openItem(item);
+      setTimeout(function () { item.scrollIntoView({block: 'start', behavior: 'smooth'}); }, 50);
+    });
+  });
+
+  /* ---------- 가정통신문 쪽 넘기기 ---------- */
+  var pager = (function () {
+    var root = document.querySelector('.pager');
+    var keys = root.getAttribute('data-pages').split(',');
+    var view = root.querySelector('.pview');
+    var nums = root.querySelectorAll('.pnum');
+    var prevs = root.querySelectorAll('.prev');
+    var nexts = root.querySelectorAll('.next');
+    var cur = 0, token = 0, srcNow = '';
+
+    function render() {
+      var my = ++token;
+      nums.forEach(function (n) { n.textContent = (cur + 1) + ' / ' + keys.length + ' 쪽'; });
+      prevs.forEach(function (b) { b.disabled = cur === 0; });
+      nexts.forEach(function (b) { b.disabled = cur === keys.length - 1; });
+      view.innerHTML = '<div class="loading">원본을 불러오는 중…</div>';
+      srcNow = '';
+      getImg(keys[cur]).then(function (src) {
+        if (my !== token) return;
+        var img = new Image();
+        img.className = 'shot';
+        img.alt = '「디벗」 반납 안내 가정통신문 ' + (cur + 1) + '쪽';
+        img.src = src;
+        srcNow = src;
+        img.addEventListener('click', function () { openViewer(src, img.alt); });
+        view.innerHTML = '';
+        view.appendChild(img);
+        if (cur + 1 < keys.length) getImg(keys[cur + 1]).catch(function () {});
+      }, function () {
+        if (my !== token) return;
+        view.innerHTML = '<div class="loading">불러오지 못했습니다. </div>';
+        var r = document.createElement('button');
+        r.type = 'button'; r.className = 'btn line'; r.textContent = '다시 시도';
+        r.addEventListener('click', render);
+        view.firstChild.appendChild(r);
+      });
+    }
+    function go(d, scroll) {
+      var n = cur + d;
+      if (n < 0 || n >= keys.length) return;
+      cur = n; render();
+      if (scroll) root.scrollIntoView({block: 'start', behavior: 'smooth'});
+    }
+    prevs.forEach(function (b) { b.addEventListener('click', function () { go(-1, b.parentNode !== root.firstElementChild); }); });
+    nexts.forEach(function (b) { b.addEventListener('click', function () { go(1, b.parentNode !== root.firstElementChild); }); });
+    root.querySelector('.zoom').addEventListener('click', function () { if (srcNow) openViewer(srcNow, '가정통신문 ' + (cur + 1) + '쪽'); });
+
+    /* 좌우로 밀어서 넘기기 */
+    var sx = 0, sy = 0;
+    view.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive: true});
+    view.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+      if (Math.abs(dx) > 70 && Math.abs(dy) < 50) go(dx < 0 ? 1 : -1, false);
+    }, {passive: true});
+
+    return {load: function () { if (!view.firstChild) render(); }};
+  })();
+
+  /* 미리 받아 두기: 중요한 것부터 3개씩 */
+  var order = ['as_call', 'as_kakao', 'as_locker', 'as_center', 'unlock_lock', 'unlock_asm',
+               'ret_p1', 'check', 'ret_p2', 'ret_p3', 'ret_2', 'ret_3', 'ret_4'];
+  function prefetch() {
+    var i = 0, active = 0;
+    (function next() {
+      while (active < 3 && i < order.length) {
+        active++;
+        getImg(order[i++]).then(done, done);
+      }
+      function done() { active--; next(); }
+    })();
+  }
+  setTimeout(prefetch, 400);
+
+  /* ---------- 크게 보기 ---------- */
+  var viewer = document.getElementById('viewer');
+  var vimg = viewer.querySelector('img');
+  var vbody = viewer.querySelector('.vbody');
+  var zooms = viewer.querySelectorAll('.z');
+  function setZoom(z) {
+    vimg.style.width = z + '%';
+    zooms.forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-z') === String(z)); });
+  }
+  function openViewer(src, alt) {
+    vimg.src = src; vimg.alt = alt || '';
+    setZoom(100); vbody.scrollTop = 0; vbody.scrollLeft = 0;
+    viewer.classList.add('on');
+    document.body.style.overflow = 'hidden';
+    viewer.querySelector('.close').focus();
+  }
+  function closeViewer() {
+    viewer.classList.remove('on');
+    document.body.style.overflow = '';
+  }
+  zooms.forEach(function (b) { b.addEventListener('click', function () { setZoom(Number(b.getAttribute('data-z'))); }); });
+  viewer.querySelector('.close').addEventListener('click', closeViewer);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeViewer(); });
+
+  /* ---------- 원본 PDF ---------- */
+  var pdfUrls = {};
+  function toUrl(b64) {
+    var raw = atob(b64), bytes = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+    return URL.createObjectURL(new Blob([bytes], {type: 'application/pdf'}));
+  }
+  document.querySelectorAll('[data-doc]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-doc'), mode = btn.getAttribute('data-mode');
+      var status = btn.closest('.pdf').querySelector('.status');
+      var say = function (m, err) { status.textContent = m; status.classList.toggle('err', !!err); };
+      var popup = mode === 'open' ? window.open('', '_blank') : null;
+      btn.disabled = true; say('PDF 준비 중…');
+      run().withSuccessHandler(function (f) {
+        btn.disabled = false;
+        if (!f || !f.base64) { if (popup) popup.close(); say('PDF를 불러오지 못했습니다. 다시 눌러 주세요.', true); return; }
+        var url = pdfUrls[key] || (pdfUrls[key] = toUrl(f.base64));
+        if (mode === 'save') {
+          var a = document.createElement('a');
+          a.href = url; a.download = f.filename; document.body.appendChild(a); a.click(); a.remove();
+          say('저장을 시작했습니다.');
+        } else if (popup) {
+          popup.location.href = url; say('새 창에서 열었습니다.');
+        } else {
+          var l = status.querySelector('a') || document.createElement('a');
+          l.href = url; l.target = '_blank'; l.rel = 'noopener'; l.textContent = ' 여기를 눌러 여세요';
+          say('새 창이 막혔습니다.'); status.appendChild(l);
+        }
+      }).withFailureHandler(function () {
+        btn.disabled = false; if (popup) popup.close();
+        say('PDF를 불러오지 못했습니다. 다시 눌러 주세요.', true);
+      }).getDocument(key);
+    });
+  });
+
+  if (hist) hist.replace({s: 'home'}, null, 'home');
+})();
+</script>
+</body>
+</html>
