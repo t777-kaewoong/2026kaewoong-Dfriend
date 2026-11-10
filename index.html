@@ -97,6 +97,16 @@
   .status{min-height:1.4em;margin-top:8px;font-size:14px;color:var(--muted)}
   .status.err{color:var(--red)}
 
+  /* 접속 공지 */
+  #asm-notice{width:calc(100% - 32px);max-width:440px;max-height:calc(100% - 32px);overflow:auto;
+    padding:24px;border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink)}
+  #asm-notice::backdrop{background:rgba(13,23,36,.6)}
+  #asm-notice h2{margin:0 0 12px;font-size:22px;color:var(--navy)}
+  #asm-notice p{margin:0 0 18px;font-size:16px}
+  #asm-notice .btn{width:100%;white-space:normal}
+  #asm-notice .btn + .btn{margin-top:10px}
+  #asm-logout-help{scroll-margin-top:90px}
+
   /* 크게 보기 */
   #viewer{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;background:#0d1724}
   #viewer.on{display:flex}
@@ -213,7 +223,7 @@
       <button class="toggle" type="button"><span class="n">2</span><span><span class="t">ASM 계정 로그아웃 방법</span><span class="s">설정 → 맨 위 계정 → 로그아웃</span></span><span class="chev">열기 ▾</span></button>
       <div class="panel"><p class="guide">ASM 비밀번호는 숫자 4자리이며, 초기 비밀번호 0000에서 변경되었습니다.</p></div>
     </div>
-    <div class="item">
+    <div class="item" id="asm-logout-help">
       <button class="toggle" type="button"><span class="n">3</span><span><span class="t">ASM 계정 로그아웃이 불가능한 경우(안되는 사람 필독)</span><span class="s">스크린 타임 암호를 끈 뒤 로그아웃 다시 시도</span></span><span class="chev">열기 ▾</span></button>
       <div class="panel">
         <p class="guide">안내에 따라 스크린타임 기능을 종료하고, 로그아웃을 다시 시도하세요.</p>
@@ -288,6 +298,14 @@
     </div>
   </section>
 </main>
+
+<!-- 접속 공지 -->
+<dialog id="asm-notice" aria-labelledby="asm-notice-title" aria-describedby="asm-notice-description">
+  <h2 id="asm-notice-title">ASM 로그아웃 안내</h2>
+  <p id="asm-notice-description">ASM 계정 로그아웃이 안 되면 스크린 타임 암호를 해제한 뒤 다시 시도하세요.</p>
+  <button class="btn" type="button" id="asm-notice-shortcut" autofocus>ASM 로그아웃이 안 되는 사람은 여기를 누르세요</button>
+  <button class="btn line" type="button" id="asm-notice-close">닫기</button>
+</dialog>
 
 <!-- 크게 보기 -->
 <div id="viewer" role="dialog" aria-modal="true" aria-label="원본 크게 보기">
@@ -571,6 +589,18 @@
   });
 
   if (hist) hist.replace({s: 'home'}, null, 'home');
+  /* 접속할 때마다 ASM 로그아웃 해결 방법 안내 */
+  var notice = document.getElementById('asm-notice');
+  document.getElementById('asm-notice-close').addEventListener('click', function () { notice.close(); });
+  document.getElementById('asm-notice-shortcut').addEventListener('click', function () {
+    notice.close();
+    show('unlock', true);
+    var item = document.getElementById('asm-logout-help');
+    openItem(item);
+    item.querySelector('.toggle').focus({preventScroll: true});
+    item.scrollIntoView({block: 'start'});
+  });
+  notice.showModal();
 })();
 </script>
 </body>
