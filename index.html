@@ -305,6 +305,7 @@
   <p id="asm-notice-description">ASM 계정 로그아웃이 안 되면 스크린 타임 암호를 해제한 뒤 다시 시도하세요.</p>
   <button class="btn" type="button" id="asm-notice-shortcut" autofocus>ASM 로그아웃이 안 되는 사람은 여기를 누르세요</button>
   <button class="btn line" type="button" id="asm-notice-close">닫기</button>
+  <button class="btn line" type="button" id="asm-notice-hide">다시 안 보기</button>
 </dialog>
 
 <!-- 크게 보기 -->
@@ -589,8 +590,15 @@
   });
 
   if (hist) hist.replace({s: 'home'}, null, 'home');
-  /* 접속할 때마다 ASM 로그아웃 해결 방법 안내 */
+  /* ASM 로그아웃 공지: 다시 안 보기 선택은 이 브라우저에 저장 */
   var notice = document.getElementById('asm-notice');
+  var noticeStorageKey = 'kaewoong-dfriend:asm-logout-notice:v1:hidden';
+  var noticeHidden = false;
+  try { noticeHidden = localStorage.getItem(noticeStorageKey) === '1'; } catch (e) {}
+  document.getElementById('asm-notice-hide').addEventListener('click', function () {
+    try { localStorage.setItem(noticeStorageKey, '1'); } catch (e) {}
+    notice.close();
+  });
   document.getElementById('asm-notice-close').addEventListener('click', function () { notice.close(); });
   document.getElementById('asm-notice-shortcut').addEventListener('click', function () {
     notice.close();
@@ -600,7 +608,7 @@
     item.querySelector('.toggle').focus({preventScroll: true});
     item.scrollIntoView({block: 'start'});
   });
-  notice.showModal();
+  if (!noticeHidden) notice.showModal();
 })();
 </script>
 </body>
