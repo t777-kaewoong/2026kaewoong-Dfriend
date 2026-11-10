@@ -211,7 +211,23 @@
     </div>
     <div class="item" data-img="unlock_asm">
       <button class="toggle" type="button"><span class="n">2</span><span><span class="t">ASM 계정 로그아웃 방법</span><span class="s">설정 → 맨 위 계정 → 로그아웃</span></span><span class="chev">열기 ▾</span></button>
-      <div class="panel"></div>
+      <div class="panel"><p class="guide">ASM 비밀번호는 숫자 4자리이며, 초기 비밀번호 0000에서 변경되었습니다.</p></div>
+    </div>
+    <div class="item">
+      <button class="toggle" type="button"><span class="n">3</span><span><span class="t">ASM 계정 로그아웃이 불가능한 경우(안되는 사람 필독)</span><span class="s">스크린 타임 암호를 끈 뒤 로그아웃 다시 시도</span></span><span class="chev">열기 ▾</span></button>
+      <div class="panel">
+        <p class="guide">안내에 따라 스크린타임 기능을 종료하고, 로그아웃을 다시 시도하세요.</p>
+        <p class="guide">아래 사진 순서대로 스크린 타임 암호를 끄세요.</p>
+        <p class="guide">1. 설정 → 스크린 타임에서 ‘스크린 타임 암호 변경’을 누르세요.</p>
+        <img class="shot" id="screen-time-step-1" src="img/unlock_screen_time_1.jpg" alt="1단계: 설정의 스크린 타임 화면에서 스크린 타임 암호 변경 선택" loading="lazy" width="3000" height="4000">
+        <div class="tools"><button class="btn line zoom" type="button" data-zoom-img="screen-time-step-1">🔍 크게 보기</button></div>
+        <p class="guide">2. ‘스크린 타임 암호 끄기’를 선택하세요.</p>
+        <img class="shot" id="screen-time-step-2" src="img/unlock_screen_time_2.jpg" alt="2단계: 메뉴에서 스크린 타임 암호 끄기 선택" loading="lazy" width="3000" height="4000">
+        <div class="tools"><button class="btn line zoom" type="button" data-zoom-img="screen-time-step-2">🔍 크게 보기</button></div>
+        <p class="guide">3. ‘스크린 타임 설정 잠그기’가 표시되면 암호가 꺼진 상태입니다. 2번 안내에 따라 ASM 계정 로그아웃을 다시 시도하세요.</p>
+        <img class="shot" id="screen-time-step-3" src="img/unlock_screen_time_3.jpg" alt="3단계: 암호를 끈 후 스크린 타임 설정 잠그기가 표시된 완료 화면" loading="lazy" width="3000" height="4000">
+        <div class="tools"><button class="btn line zoom" type="button" data-zoom-img="screen-time-step-3">🔍 크게 보기</button></div>
+      </div>
     </div>
 
     <div class="pdf">
@@ -506,6 +522,15 @@
     document.body.style.overflow = '';
   }
   zooms.forEach(function (b) { b.addEventListener('click', function () { setZoom(Number(b.getAttribute('data-z'))); }); });
+  document.querySelectorAll('.panel img.shot').forEach(function (img) {
+    img.addEventListener('click', function () { openViewer(img.src, img.alt); });
+  });
+  document.querySelectorAll('[data-zoom-img]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var img = document.getElementById(btn.getAttribute('data-zoom-img'));
+      openViewer(img.src, img.alt);
+    });
+  });
   viewer.querySelector('.close').addEventListener('click', closeViewer);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeViewer(); });
 
